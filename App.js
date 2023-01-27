@@ -34,6 +34,33 @@ export default function App() {
 
     permissoesIos();
 
+
+    
+    /*** BRANCH 02: CÓDIGO PARA O EXEMPLO DE PUSH NOTIFICATION */
+
+    /* Para testar as 'push notifications', entre no site https://expo.dev/notifications
+    e preencha o campo "To (Expo push token from your app)" com o token do seu aparelho (veja no console/terminal), e coloque
+    também um título ("Message title") e um texto ("Message body") para a mensagem.
+    
+    Em seguida, clique em "Send a notifications" */
+
+    /* Obter as permissões atuais do dispositivo */
+    Notifications.getPermissionsAsync().then(status => {
+      if(status.granted){
+        /* Permissões ok? Então vamos obter o token expo do aparelho.
+        Este token é um código identificador único de cada aparelho que utilize um app através do Expo Go.
+        É através dele que a notificação será enviada. */
+        Notifications.getExpoPushTokenAsync().then(token => {
+          console.log(token);
+        })
+      }
+    })
+
+    /*** BRANCH 02: FIM DO CÓDIGO PARA O EXEMPLO DE PUSH NOTIFICATION */
+
+
+
+
     /* Ouvinte de evento para as notificações recebidas, ou seja,
     quando a notificação aparece no topo da tela do dispositivo. */
     Notifications.addNotificationReceivedListener(notificacao => {
@@ -68,7 +95,7 @@ export default function App() {
     <>
       <StatusBar />
       <SafeAreaView style={styles.container}>
-        <Text>Exemplo de sistema de notificação local</Text>
+        <Text>Exemplo de sistema de notificação push</Text>
         <Button title='Disparar notificação' onPress={enviarMensagem} />
 
         { dados && 
